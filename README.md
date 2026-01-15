@@ -20,43 +20,81 @@ A comprehensive survival analysis framework built with **pure Python**, leveragi
 
 ### Survival Function Theory
 
-The **survival function** S(t) represents the probability of surviving beyond time t:
+The **survival function** $S(t)$ represents the probability that a random survival time $T$ exceeds time $t$:
 
+```math
+S(t) = P(T > t) = e^{-\lambda t}
 ```
-S(t) = P(T > t) = exp(-λt)
+
+where $\lambda > 0$ is the constant hazard rate.
+
+#### Key Properties
+
+-   **Probability Density Function (PDF):**
+
+```math
+f(t) = \lambda e^{-\lambda t}, \quad t \ge 0
 ```
 
-**Key Properties:**
+-   **Cumulative Distribution Function (CDF):**
 
--   **Probability Density**: f(t) = λ·exp(-λt)
--   **Cumulative Distribution**: F(t) = 1 - exp(-λt)
--   **Hazard Function**: h(t) = λ (constant)
--   **Mean Survival**: E[T] = 1/λ
--   **Median Survival**: ln(2)/λ ≈ 0.693/λ
+```math
+F(t) = P(T \le t) = 1 - e^{-\lambda t}
+```
+
+-   **Hazard Function:**
+
+```math
+h(t) = \frac{f(t)}{S(t)} = \lambda
+```
+
+-   **Mean Survival Time:**
+
+```math
+\mathbb{E}[T] = \frac{1}{\lambda}
+```
+
+-   **Median Survival Time:**
+
+```math
+t_{0.5} = \frac{\ln(2)}{\lambda} \approx \frac{0.693}{\lambda}
+```
 
 ### Statistical Validation
 
-**Kolmogorov-Smirnov Test:**
+#### Kolmogorov–Smirnov Test
 
-```
-D_n = sup_t |F_n(t) - F(t)|
-```
+The Kolmogorov–Smirnov test statistic is defined as:
 
-Measures maximum deviation between empirical and theoretical CDFs.
-
-**Anderson-Darling Test:**
-
-```
-A² = -n - Σ[(2i-1)/n]·[ln F(X_i) + ln(1-F(X_{n+1-i}))]
+```math
+D_n = \sup_t \left| F_n(t) - F(t) \right|
 ```
 
-Weighted test giving more emphasis to distribution tails.
+where $F_n(t)$ is the empirical cumulative distribution function and
+$F(t)$ is the theoretical cumulative distribution function.
 
-**Bootstrap Confidence Interval:**
+#### Anderson–Darling Test
 
+The Anderson–Darling test statistic is given by:
+
+```math
+A^2 = -n - \frac{1}{n} \sum_{i=1}^{n} (2i - 1)
+\left[
+\ln F(X_i) + \ln \left( 1 - F(X_{n+1-i}) \right)
+\right]
 ```
-CI = [Q_α/2, Q_1-α/2]  where Q_p = percentile of bootstrap means
+
+This test assigns greater weight to discrepancies in the distribution tails.
+
+#### Bootstrap Confidence Interval
+
+A non-parametric $(1 - \alpha) \times 100\%$ confidence interval for the mean is constructed as:
+
+```math
+\text{CI} = \left[ Q_{\alpha/2},\; Q_{1-\alpha/2} \right]
 ```
+
+where $Q_p$ denotes the $p$-th percentile of the bootstrap distribution of sample means.
 
 ---
 
