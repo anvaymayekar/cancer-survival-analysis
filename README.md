@@ -395,7 +395,6 @@ All figures have been saved. Closing the program.
 
 
 ✓ Analysis results saved to: outputs\16_01_2026_022952.pdf
-...
 ```
 
 ### PDF Report Contents
